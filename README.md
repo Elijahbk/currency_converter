@@ -16,7 +16,7 @@ This project is a currency converter application that allows users to convert cu
 1. Clone the repository:
    ```bash
    git clone <https://github.com/Elijahbk/currency_converter.git>
-   cd <your-repository-directory>
+   cd <currency_converter>
 ## Usage
 1. Start the application:
    ```bash
@@ -32,9 +32,9 @@ Open your browser and navigate to <http://localhost:3000>
 2. Follow the following installation steps on each server:
    ```bash
    git clone <https://github.com/Elijahbk/currency_converter.git>
-   cd <your-repository-directory>
+   cd <currency_converter>
    npm install
-   echo "EXCHANGE_RATES_API_KEY=my_api_key" > .env
+   echo "EXCHANGE_RATES_API_KEY = my_api_key" > .env
    node server.js
    ```
 3. Load balancer configuration (Lb01):
