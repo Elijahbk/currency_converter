@@ -15,5 +15,5 @@ This project is a currency converter application that allows users to convert cu
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/Elijahbk/currency_converter.git
    cd <your-repository-directory>
