@@ -1,0 +1,14 @@
+{
+    "name": "API_assignment",
+    "version": "1.0.0",
+    "description": "Your project description",
+    "main": "testScript.js",
+    "type": "module",
+    "scripts": {
+      "test": "node testScript.js"
+    },
+    "dependencies": {
+      "node-fetch": "^3.0.0"
+    }
+  }
+  

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CURRENCY CONVERTER</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #fff;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.088);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.6em;
+    }
+    form div {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    input, select {
+      background-color: rgba(233, 162, 141, 0.203);
+      color: #fff;
+    }
+    button {
+      background-color: #ff6161e3;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff3b2f;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CURRENCY CONVERTER</h1>
+    <form id="converter-form">
+      <div>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount" required>
+      </div>
+      <div>
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency"></select>
+      </div>
+      <div>
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency"></select>
+      </div>
+      <button type="submit">Convert</button>
+    </form>
+    <h2 id="result"></h2>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('converter-form');
+      const fromCurrency = document.getElementById('fromCurrency');
+      const toCurrency = document.getElementById('toCurrency');
+      const result = document.getElementById('result');
+
+      fetch('/api/rates')
+        .then(response => response.json())
+        .then(data => {
+          const currencies = Object.keys(data.rates);
+          currencies.forEach(currency => {
+            const option1 = document.createElement('option');
+            option1.value = currency;
+            option1.textContent = currency;
+            fromCurrency.appendChild(option1);
+
+            const option2 = document.createElement('option');
+            option2.value = currency;
+            option2.textContent = currency;
+            toCurrency.appendChild(option2);
+          });
+        });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const amount = document.getElementById('amount').value;
+        const from = fromCurrency.value;
+        const to = toCurrency.value;
+
+        fetch(`/api/rates`)
+          .then(response => response.json())
+          .then(data => {
+            const rate = data.rates[to] / data.rates[from];
+            const convertedAmount = (amount * rate).toFixed(2);
+            result.textContent = `${amount} ${from} = ${convertedAmount} ${to}`;
+          })
+          .catch(error => {
+            result.textContent = 'Error converting currency';
+          });
+      });
+    });
+  </script>
+</body>
+</html>
